@@ -20,7 +20,8 @@ class TTTClient(g:GraphicsContext) extends Thread {
         if (command.startsWith("Display=")) {
           renderGrid(g, parseDisplay(command.substring(8)))
         } else if (command.equals("Play")) {
-
+          Thread.sleep(3000)
+          out.println("Act=2.1")
         }
       } else {
         continue = false
