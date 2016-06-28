@@ -1,38 +1,52 @@
 import java.io.PrintStream
 import java.net.{InetAddress, Socket}
+import java.util.concurrent.Executors
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 
+import scala.annotation.tailrec
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, ExecutionContext, Future}
 import scala.io.BufferedSource
+import scala.util.{Failure, Success, Try}
 
 /**
   * Created by dragonaxe on 6/23/16.
   */
-class TTTClient(g:GraphicsContext) extends Thread {
+class TTTClient(g: GraphicsContext, prom: RePromise[String]) extends Thread {
+
   override def run(): Unit = {
     val s = new Socket(InetAddress.getByName("localhost"), 9999)
     lazy val in = new BufferedSource(s.getInputStream()).getLines()
     val out = new PrintStream(s.getOutputStream())
+    val thread = ExecutionContext.fromExecutor(Executors.newSingleThreadExecutor())
     var continue = true
-    while (continue) {
+
+    def serverProcessing(): Unit = {
+
       if (in.hasNext) {
         val command = in.next()
+        println("Received: " + command)
         if (command.startsWith("Display=")) {
           renderGrid(g, parseDisplay(command.substring(8)))
-        } else if (command.equals("Play")) {
-          Thread.sleep(3000)
-          out.println("Act=2.1")
-        }
-      } else {
-        continue = false
-      }
+        } else if (command.startsWith("Player=")) {
 
+        } else if (command.equals("Play")) {
+          println("Waiting for click action.")
+
+          val pos = prom.getValue
+          println("Acting: " + pos)
+          out.println("Act=" + pos)
+        }
+        serverProcessing()
+      }
     }
+    serverProcessing()
     s.close()
   }
 
-  def parseDisplay(text:String): Array[Array[Int]] = {
-    val grid = Array.fill(3,3)(0)
+  def parseDisplay(text: String): Array[Array[Int]] = {
+    val grid = Array.fill(3, 3)(0)
 
     grid(0)(0) = text.charAt(0).asDigit
     grid(0)(1) = text.charAt(1).asDigit
@@ -50,20 +64,20 @@ class TTTClient(g:GraphicsContext) extends Thread {
   }
 
 
-  def drawEx(g:GraphicsContext, x:Int, y:Int): Unit = {
+  def drawEx(g: GraphicsContext, x: Int, y: Int): Unit = {
     val xCenter = x * 100 + 50
     val yCenter = y * 100 + 50
     g.strokeLine(xCenter - 40, yCenter - 40, xCenter + 40, yCenter + 40)
     g.strokeLine(xCenter - 40, yCenter + 40, xCenter + 40, yCenter - 40)
   }
 
-  def drawOval(g:GraphicsContext, x:Int, y:Int): Unit = {
+  def drawOval(g: GraphicsContext, x: Int, y: Int): Unit = {
     val xCenter = x * 100 + 50
     val yCenter = y * 100 + 50
     g.strokeOval(xCenter - 40, yCenter - 40, 80, 80)
   }
 
-  def renderGrid(g:GraphicsContext, grid:Array[Array[Int]]): Unit = {
+  def renderGrid(g: GraphicsContext, grid: Array[Array[Int]]): Unit = {
     g.setStroke(Color.GREEN)
     g.setFill(Color.WHITE)
     g.clearRect(0, 0, 300, 300)

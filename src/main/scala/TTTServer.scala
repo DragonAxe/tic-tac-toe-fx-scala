@@ -8,6 +8,16 @@ object TTTServer {
 
   def main(args: Array[String]) {
     val server = new ServerSocket(9999)
+    while (true) {
+      try {
+        twerkTwerkTwerkTwerk(server)
+      } catch {
+        case e: Exception => println("Resetting Game. " + e.getMessage)
+      }
+    }
+  }
+
+  def twerkTwerkTwerkTwerk(server:ServerSocket): Unit = {
     def collect(opens:List[Socket]): List[Socket] = {
       if (opens.length < 2) {
         println("Client " + opens.length + " connected")
