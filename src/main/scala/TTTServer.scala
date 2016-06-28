@@ -1,6 +1,5 @@
 import java.io.PrintStream
 import java.net.{ServerSocket, Socket}
-import java.util
 
 import scala.io.BufferedSource
 
@@ -17,8 +16,8 @@ object TTTServer {
     }
   }
 
-  def twerkTwerkTwerkTwerk(server:ServerSocket): Unit = {
-    def collect(opens:List[Socket]): List[Socket] = {
+  def twerkTwerkTwerkTwerk(server: ServerSocket): Unit = {
+    def collect(opens: List[Socket]): List[Socket] = {
       if (opens.length < 2) {
         println("Client " + opens.length + " connected")
         collect(opens :+ server.accept())
@@ -27,8 +26,8 @@ object TTTServer {
       }
     }
     val players = collect(Nil)
-    def play(grid:Array[Array[Int]], iterator: Iterator[Socket], playerNum:Int): Unit = {
-      players.foreach((player:Socket) => {
+    def play(grid: Array[Array[Int]], iterator: Iterator[Socket], playerNum: Int): Unit = {
+      players.foreach((player: Socket) => {
         val out = new PrintStream(player.getOutputStream)
         println("Display=" + serializedGrid(grid))
         out.println("Display=" + serializedGrid(grid))
@@ -50,7 +49,7 @@ object TTTServer {
         }
       }
     }
-    play(Array.fill(3,3)(0), players.iterator, 1)
+    play(Array.fill(3, 3)(0), players.iterator, 1)
   }
 
   /**
@@ -59,23 +58,23 @@ object TTTServer {
     * @param grid The grid to serialize
     * @return A string with dot separated rows.
     */
-  def serializedGrid(grid:Array[Array[Int]]): String = {
+  def serializedGrid(grid: Array[Array[Int]]): String = {
     val builder = StringBuilder.newBuilder
-    grid.iterator.foreach((v:Array[Int]) => {
+    grid.iterator.foreach((v: Array[Int]) => {
       builder.append('.')
-      v.iterator.foreach((z:Int) => {
+      v.iterator.foreach((z: Int) => {
         builder.append(z.toString)
       })
     })
     builder.toString().substring(1)
   }
 
-  def checkGridIsWin(grid:Array[Array[Int]]): Boolean = {
+  def checkGridIsWin(grid: Array[Array[Int]]): Boolean = {
     // TODO: implement grid checking for winner
     false
   }
 
-  def parseCoordinate(text:String):(Int, Int) = {
+  def parseCoordinate(text: String): (Int, Int) = {
     println("Parsing: " + text)
     val index = text.indexOf(".")
     (text.substring(0, index).toInt, text.substring(index + 1).toInt)
@@ -94,23 +93,23 @@ object TTTServer {
     }
   }
 
-  def other(): Unit ={
-//
-//    //    val player2 = server.accept()
-//    val in = new BufferedSource(player1.getInputStream()).getLines()
-//    val out = new PrintStream(player1.getOutputStream())
-//    var continue = true
-//    while (continue) {
-//      out.println("Display=010,210,101")
-//      out.flush()
-//      if (in.hasNext) {
-//        println(in.next())
-//      } else {
-//        continue = false
-//      }
-//    }
-//    player1.close()
-//    //    player2.close()
+  def other(): Unit = {
+    //
+    //    //    val player2 = server.accept()
+    //    val in = new BufferedSource(player1.getInputStream()).getLines()
+    //    val out = new PrintStream(player1.getOutputStream())
+    //    var continue = true
+    //    while (continue) {
+    //      out.println("Display=010,210,101")
+    //      out.flush()
+    //      if (in.hasNext) {
+    //        println(in.next())
+    //      } else {
+    //        continue = false
+    //      }
+    //    }
+    //    player1.close()
+    //    //    player2.close()
   }
 
 }

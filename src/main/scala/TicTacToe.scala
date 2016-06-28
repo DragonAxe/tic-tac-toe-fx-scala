@@ -1,19 +1,10 @@
-import java.io.PrintStream
-import java.lang.IllegalMonitorStateException
-import java.net.{InetAddress, Socket}
-import java.util.concurrent.locks.Lock
 import javafx.application.Application
 import javafx.event.EventHandler
 import javafx.scene.Scene
-import javafx.scene.canvas.{Canvas, GraphicsContext}
+import javafx.scene.canvas.Canvas
 import javafx.scene.input.MouseEvent
 import javafx.scene.layout.StackPane
-import javafx.scene.paint.Color
 import javafx.stage.{Stage, WindowEvent}
-
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future, Promise}
-import scala.io.BufferedSource
 
 
 class TicTacToe extends Application {

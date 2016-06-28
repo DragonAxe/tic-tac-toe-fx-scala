@@ -4,11 +4,8 @@ import java.util.concurrent.Executors
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 
-import scala.annotation.tailrec
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, ExecutionContext, Future}
-import scala.io.BufferedSource
-import scala.util.{Failure, Success, Try}
+import scala.concurrent.ExecutionContext
+import scala.io.{BufferedSource, StdIn}
 
 /**
   * Created by dragonaxe on 6/23/16.
@@ -16,7 +13,8 @@ import scala.util.{Failure, Success, Try}
 class TTTClient(g: GraphicsContext, prom: RePromise[String]) extends Thread {
 
   override def run(): Unit = {
-    val s = new Socket(InetAddress.getByName("localhost"), 9999)
+    val ip = StdIn.readLine("Enter IP> ")
+    val s = new Socket(InetAddress.getByName(ip), 9999)
     lazy val in = new BufferedSource(s.getInputStream()).getLines()
     val out = new PrintStream(s.getOutputStream())
     val thread = ExecutionContext.fromExecutor(Executors.newSingleThreadExecutor())
@@ -33,7 +31,6 @@ class TTTClient(g: GraphicsContext, prom: RePromise[String]) extends Thread {
 
         } else if (command.equals("Play")) {
           println("Waiting for click action.")
-
           val pos = prom.getValue
           println("Acting: " + pos)
           out.println("Act=" + pos)
