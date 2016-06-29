@@ -7,7 +7,9 @@ import javafx.scene.input.MouseEvent
 import javafx.scene.layout.BorderPane
 import javafx.stage.{Stage, WindowEvent}
 
-
+/**
+  * JavaFX gui initialization. Server and client threads are also started here via event handlers.
+  */
 class TicTacToe extends Application {
 
   override def start(primaryStage: Stage) {

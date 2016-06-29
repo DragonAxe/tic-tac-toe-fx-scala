@@ -3,6 +3,10 @@ import java.net.{ServerSocket, Socket}
 
 import scala.io.BufferedSource
 
+/**
+  * This is the tic-tac-toe server thread. It lets 2 clients connect to it and sends 'draw' and 'request play'
+  * commands to them.
+  */
 object TTTServer extends Thread {
 
   override def run(): Unit = {
@@ -14,10 +18,6 @@ object TTTServer extends Thread {
         case e: Exception => println("Resetting Game. " + e.getMessage)
       }
     }
-  }
-
-  def main(args: Array[String]) {
-    this.start()
   }
 
   def twerkTwerkTwerkTwerk(server: ServerSocket): Unit = {
@@ -97,23 +97,8 @@ object TTTServer extends Thread {
     }
   }
 
-  def other(): Unit = {
-    //
-    //    //    val player2 = server.accept()
-    //    val in = new BufferedSource(player1.getInputStream()).getLines()
-    //    val out = new PrintStream(player1.getOutputStream())
-    //    var continue = true
-    //    while (continue) {
-    //      out.println("Display=010,210,101")
-    //      out.flush()
-    //      if (in.hasNext) {
-    //        println(in.next())
-    //      } else {
-    //        continue = false
-    //      }
-    //    }
-    //    player1.close()
-    //    //    player2.close()
+  def main(args: Array[String]) {
+    this.start()
   }
 
 }

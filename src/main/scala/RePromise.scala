@@ -1,6 +1,12 @@
-import scala.concurrent.duration._
+import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Promise}
 
+/**
+  * This is my hack using scala's futures and promises to get the TTTClient thread to block while it waits for a click
+  * action on the GUI thread. I will redesign this later once I have some time.
+  *
+  * @tparam T The type of data that will be promised.
+  */
 class RePromise[T] {
 
   var isWaiting: Boolean = false

@@ -5,12 +5,12 @@ import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 
 import scala.concurrent.ExecutionContext
-import scala.io.{BufferedSource, StdIn}
+import scala.io.BufferedSource
 
 /**
-  * Created by dragonaxe on 6/23/16.
+  * This is the tic-tac-toe client thread. It handles IO messages sent from the server.
   */
-class TTTClient(g: GraphicsContext, prom: RePromise[String], ip:String) extends Thread {
+class TTTClient(g: GraphicsContext, prom: RePromise[String], ip: String) extends Thread {
 
   override def run(): Unit = {
     val s = new Socket(InetAddress.getByName(ip), 9999)
