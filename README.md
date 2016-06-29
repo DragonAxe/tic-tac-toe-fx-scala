@@ -1,7 +1,7 @@
 # Networked Tic-Tac-Toe in Scala using JavaFX
 Hello and welcome.
 
-This is a little project I created to help myself learn Scala. I also wanted to build a GUI application using the JavaFX toolkit, since I had only worked with Swing previously. I also kept the dependencies to a minimum because I wanted to keep the learning curve to a minimum, thus no Scalaz or Akka. This version of tic-tac-toe is networked via Java Sockets (again, small learning curve for me).
+This is a little project I created to help myself learn Scala. I also wanted to build a GUI application using the JavaFX toolkit, since I had only worked with Swing previously. I also kept the dependencies to a minimum because I wanted to keep the learning curve to a minimum, thus no ScalaFX, Scalaz, or Akka. This version of tic-tac-toe is networked via Java Sockets (again, small learning curve for me).
 
 ## Building:
 You can build a 'fat' jar with all dependencies included by running `sbt assembly` within the project directory.
