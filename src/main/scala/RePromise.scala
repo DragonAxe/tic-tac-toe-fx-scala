@@ -1,4 +1,4 @@
-import scala.concurrent.duration.Duration
+import scala.concurrent.duration._
 import scala.concurrent.{Await, Promise}
 
 class RePromise[T] {

@@ -10,10 +10,9 @@ import scala.io.{BufferedSource, StdIn}
 /**
   * Created by dragonaxe on 6/23/16.
   */
-class TTTClient(g: GraphicsContext, prom: RePromise[String]) extends Thread {
+class TTTClient(g: GraphicsContext, prom: RePromise[String], ip:String) extends Thread {
 
   override def run(): Unit = {
-    val ip = StdIn.readLine("Enter IP> ")
     val s = new Socket(InetAddress.getByName(ip), 9999)
     lazy val in = new BufferedSource(s.getInputStream()).getLines()
     val out = new PrintStream(s.getOutputStream())

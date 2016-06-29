@@ -3,9 +3,9 @@ import java.net.{ServerSocket, Socket}
 
 import scala.io.BufferedSource
 
-object TTTServer {
+object TTTServer extends Thread {
 
-  def main(args: Array[String]) {
+  override def run(): Unit = {
     val server = new ServerSocket(9999)
     while (true) {
       try {
@@ -14,6 +14,10 @@ object TTTServer {
         case e: Exception => println("Resetting Game. " + e.getMessage)
       }
     }
+  }
+
+  def main(args: Array[String]) {
+    this.start()
   }
 
   def twerkTwerkTwerkTwerk(server: ServerSocket): Unit = {
